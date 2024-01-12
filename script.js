@@ -1,12 +1,15 @@
 /* We Use XMLHttpRequest to Fetch the Data from the API */
 /* XML Request is done using the AJAX(Asynchronous Javascript and XML) */
-const container = document.querySelector(".card-container");
+let userNumber = prompt();
+if (!Number(userNumber) || Number(userNumber) > 30 || Number(userNumber) < 0) {
+  userNumber = 1;
+}
 
 //* Create Instance of XMLHttpRequest
 const request = new XMLHttpRequest();
 
 //* Initiate Request By Specifying Method and URL
-request.open("get", "https://dummyjson.com/users/1");
+request.open("get", `https://dummyjson.com/users/${userNumber}`);
 
 //* Sends Request to the Server(In Post Request Specify the Data in Object as a argument which we want to send to the server)
 request.send();
@@ -16,9 +19,9 @@ request.responseType = "json";
 
 //* onload event is emit when request is completed successfully
 //* data is the response which server send back corresponding to the request
-request.onload = (data) => {
-  console.log(data);
-};
+// request.onload = (data) => {
+//   console.log(data);
+// };
 
 //* When We successfully fetch the Data from the Server then and only then we want to show the data to the user
 //* So we need to displaying the data when "load" event is occure
@@ -27,6 +30,9 @@ request.onload = (data) => {
 request.addEventListener("load", (event) => {
   // * Access Response using Instance of XMLHTTPRequest
   const response = request.response;
+  //   console.log(response);
+  updateUserData(response);
+  //   console.log(response);
   //* Access Response using the event which we collect when "load" event is occure
   //   console.log(event.currentTarget);
   //   console.log(event.currentTarget.response); //* Response Collect in RAW format
@@ -36,3 +42,17 @@ request.addEventListener("load", (event) => {
   //   console.log(request.response);
   //   console.log(JSON.parse(event.currentTarget.response));
 });
+
+function updateUserData(userData) {
+  //* Fetch the Elements
+  const image = document.querySelector("#image");
+  const firstName = document.querySelector("#first_name");
+  const lastName = document.querySelector("#last_name");
+  const email = document.querySelector(".email");
+
+  //* Set Value to the fetch element
+  image.setAttribute("src", userData.image);
+  firstName.textContent = userData.firstName;
+  lastName.textContent = userData.lastName;
+  email.textContent = userData.email;
+}
