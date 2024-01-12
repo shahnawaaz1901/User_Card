@@ -45,6 +45,19 @@ request.addEventListener("load", (event) => {
 
 function updateUserData(userData) {
   //* Fetch the Elements
+  const container = document.querySelector(".card-container");
+  container.innerHTML = `<div class="user-card">
+  <img
+    src="${userData.image}"
+    alt="Profile Image"
+    id="image"
+  />
+  <h3 id="first_name">${userData.firstName}</h3>
+  <h3 id="last_name">${userData.lastName}</h3>
+  <p class="email">${userData.email}</p>
+  <button class="btn">View Profile</button>
+</div>`;
+  /* Change Data Like this
   const image = document.querySelector("#image");
   const firstName = document.querySelector("#first_name");
   const lastName = document.querySelector("#last_name");
@@ -55,4 +68,5 @@ function updateUserData(userData) {
   firstName.textContent = userData.firstName;
   lastName.textContent = userData.lastName;
   email.textContent = userData.email;
+  */
 }
